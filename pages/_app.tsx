@@ -1,15 +1,15 @@
-import React from "react";
+import { getPageContext } from "@lib/page-context";
+import AppBar from "@material-ui/core/AppBar";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import IconButton from "@material-ui/core/IconButton";
+import { MuiThemeProvider } from "@material-ui/core/styles";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import MenuIcon from "@material-ui/icons/Menu";
 import App, { Container } from "next/app";
 import Head from "next/head";
-import { MuiThemeProvider } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import IconButton from "@material-ui/core/IconButton";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import MenuIcon from "@material-ui/icons/Menu";
-import Typography from "@material-ui/core/Typography";
+import React from "react";
 import JssProvider from "react-jss/lib/JssProvider";
-import getPageContext from "@lib/getPageContext";
 
 class MyApp extends App {
     private readonly pageContext = getPageContext();

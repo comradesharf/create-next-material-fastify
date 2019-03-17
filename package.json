@@ -7,29 +7,36 @@
     "dependencies": {
         "@material-ui/core": "^3.9.2",
         "@material-ui/icons": "^3.0.2",
-        "@zeit/next-typescript": "^1.1.1",
+        "fastify": "^2.1.0",
+        "fastify-plugin": "^1.5.0",
         "jss": "^9.8.7",
         "next": "^8.0.3",
+        "next-with-typescript": "^1.0.0",
         "react": "^16.8.4",
         "react-dom": "^16.8.4",
-        "react-jss": "^8.6.1"
+        "react-jss": "^8.6.1",
+        "ts-loader": "^5.3.3",
+        "ts-node": "^8.0.3",
+        "tsconfig-paths": "^3.8.0",
+        "typescript": "^3.3.3333"
     },
     "scripts": {
-        "dev": "nodemon",
-        "build": "next build && tsc --project tsconfig.server.json",
-        "start": "NODE_ENV=production node dist/index.js"
+        "dev": "nodemon server/index.ts",
+        "build": "next build",
+        "start": "NODE_ENV=production ts-node --files --compiler-options '{\"module\":\"commonjs\"}' server/index.ts"
     },
     "devDependencies": {
         "@types/next": "^8.0.1",
+        "@types/node": "^10.14.1",
         "@types/react": "^16.8.8",
         "@types/react-jss": "^8.6.3",
         "husky": "^1.3.1",
         "lint-staged": "^8.1.5",
         "nodemon": "^1.18.10",
+        "pino-pretty": "^2.5.0",
         "prettier": "^1.16.4",
-        "ts-node": "^8.0.3",
-        "tslint": "^5.14.0",
-        "typescript": "^3.3.3333"
+        "tsconfig-paths-webpack-plugin": "^3.2.0",
+        "tslint": "^5.14.0"
     },
     "husky": {
         "hooks": {
@@ -53,5 +60,13 @@
         "singleQuote": false,
         "jsxSingleQuote": false,
         "arrowParens": "always"
+    },
+    "nodemonConfig": {
+        "watch": [
+            "server/**/*.ts"
+        ],
+        "execMap": {
+            "ts": "ts-node --files -r tsconfig-paths/register --type-check --compiler-options '{\"module\":\"commonjs\"}'"
+        }
     }
 }
