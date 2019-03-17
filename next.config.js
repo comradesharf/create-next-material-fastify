@@ -1,10 +1,13 @@
-const withTypescript = require("@zeit/next-typescript");
+const withTypescript = require("next-with-typescript");
 
-const path = require("path");
+const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
 
 module.exports = withTypescript({
     webpack(config) {
-        config.resolve.alias["@lib"] = path.resolve("./lib");
+        config.resolve.plugins = [
+            ...(config.resolve.plugins || []),
+            new TsconfigPathsPlugin(),
+        ];
         return config;
     },
 });

@@ -1,3 +1,4 @@
+import { isBrowser } from "@lib/env";
 import { SheetsRegistry } from "jss";
 import {
     createGenerateClassName,
@@ -23,8 +24,8 @@ export type PageContext = ReturnType<typeof createPageContext>;
 
 let pageContext: PageContext | undefined;
 
-export default function getPageContext() {
-    if (!process.browser) {
+export function getPageContext() {
+    if (!isBrowser()) {
         return createPageContext();
     }
 

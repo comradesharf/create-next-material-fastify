@@ -1,16 +1,35 @@
-import { createServer } from "http";
-import { parse } from "url";
-import * as next from "next";
+import * as Fastify from "fastify";
+import { isProduction, serverPort } from "@lib/env";
+import NextPlugin from "../server-plugins/NextPlugin";
 
-const port = parseInt(process.env.PORT || "3000", 10);
-const dev = process.env.NODE_ENV !== "production";
-const app = next({ dev });
-const handle = app.getRequestHandler();
+function getServerConfig(): Fastify.ServerOptions {
+    if (isProduction()) {
+        return {
+            logger: true,
+        };
+    } else {
+        return {
+            logger: {
+                prettyPrint: {
+                    colorize: true,
+                },
+            },
+        };
+    }
+}
 
-app.prepare().then(() => {
-    createServer(async (req, res) => {
-        await handle(req, res, parse(req.url || "", true));
-    }).listen(port, () => {
-        console.log(`> Ready on http://localhost:${port}`);
-    });
-});
+async function start() {
+    try {
+        const server = Fastify(await getServerConfig());
+        server.register(NextPlugin);
+
+        const port = serverPort();
+        server.log.info("starting server at port", port);
+        await server.listen(port, "0.0.0.0");
+    } catch (err) {
+        console.error("unable to start server", err);
+        process.exit(2);
+    }
+}
+
+start();
