@@ -1,5 +1,4 @@
-function main() {
-    console.log("hello world")
-}
+#!/usr/bin/env node
 
-main();
+require("ts-node").register();
+require("./main.ts");
